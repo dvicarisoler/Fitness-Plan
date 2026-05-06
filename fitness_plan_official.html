@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summer 2026 — Fitness Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1a6b3c;
+    --green-light: #2d9e5f;
+    --green-pale: #162e1e;
+    --green-mid: #1e3d27;
+    --ink: #0d1f13;
+    --ink-mid: #a8c4b0;
+    --ink-light: #6b9278;
+    --cream: #0f2318;
+    --white: #162b1e;
+    --accent: #e8ff6e;
+    --red: #ff6b6b;
+    --text: #d4edd9;
+    --text-dim: #8aab92;
+    --border: #1e3d27;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--ink);
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    border-bottom: 1px solid var(--border);
+  }
+  nav::-webkit-scrollbar { display: none; }
+  nav a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 14px 20px;
+    white-space: nowrap;
+    transition: all 0.2s;
+    border-bottom: 2px solid transparent;
+  }
+  nav a:hover, nav a.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--ink);
+    padding: 80px 48px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(45,158,95,0.2) 0%, transparent 70%);
+  }
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green-light);
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 10vw, 120px);
+    line-height: 0.9;
+    color: var(--white);
+    letter-spacing: 0.02em;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-meta {
+    margin-top: 32px;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .hero-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .hero-stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+  .hero-stat-label {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* SECTIONS */
+  .section {
+    padding: 64px 48px;
+    border-bottom: 1px solid var(--border);
+    scroll-margin-top: 44px;
+    background: var(--cream);
+  }
+  .section:nth-child(even) { background: var(--white); }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    line-height: 1;
+    color: var(--green-light);
+    opacity: 0.35;
+    letter-spacing: 0.02em;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* TABLES */
+  .table-wrap { overflow-x: auto; margin: 24px 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  thead tr {
+    background: var(--green);
+  }
+  thead th {
+    padding: 12px 16px;
+    text-align: left;
+    color: #d4edd9;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  tbody tr:nth-child(odd) { background: var(--green-pale); }
+  tbody tr:nth-child(even) { background: var(--white); }
+  tbody tr:hover { background: #1e3d27; transition: background 0.15s; }
+  td {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+  td:first-child {
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  /* SUBHEADINGS */
+  h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--green-light);
+    letter-spacing: 0.08em;
+    margin: 36px 0 12px;
+  }
+  h3:first-of-type { margin-top: 0; }
+
+  /* BULLETS */
+  .bullet-list { list-style: none; margin: 12px 0; }
+  .bullet-list li {
+    padding: 6px 0 6px 22px;
+    position: relative;
+    font-size: 14px;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
+  }
+  .bullet-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--green-light);
+    font-size: 13px;
+  }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--ink);
+    color: var(--text);
+    border-left: 4px solid var(--accent);
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .callout strong { color: var(--accent); }
+  .callout p { font-size: 14px; line-height: 1.7; }
+
+  .callout-warning {
+    background: #1f1610;
+    border-left-color: var(--red);
+    color: var(--text);
+  }
+  .callout-warning strong { color: var(--red); }
+
+  /* PRIORITY GRID */
+  .priority-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .priority-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--green-light);
+    padding: 20px;
+    border-radius: 0 0 4px 4px;
+  }
+  .priority-card.red { border-top-color: var(--red); }
+  .priority-card.amber { border-top-color: #f0a500; }
+  .priority-card.grey { border-top-color: #4a6b52; }
+  .priority-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    line-height: 1;
+    color: var(--green-light);
+    margin-bottom: 6px;
+    opacity: 0.5;
+  }
+  .priority-card.red .priority-num { color: var(--red); }
+  .priority-card.amber .priority-num { color: #f0a500; }
+  .priority-card.grey .priority-num { color: #4a6b52; }
+  .priority-label { font-weight: 600; font-size: 14px; margin-bottom: 4px; color: var(--text); }
+  .priority-sub { font-size: 12px; color: var(--text-dim); }
+
+  /* WEEK BADGES */
+  .phase-foundation { background: #1a3050; color: #7eb8f7; }
+  .phase-maintenance { background: #2e2500; color: #f5c842; }
+  .phase-build { background: #0f2e1a; color: #4ade80; }
+  .phase-peak { background: #1e1030; color: #c084fc; }
+  .phase-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  /* OUTCOME CARDS */
+  .outcome-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .outcome-card {
+    background: var(--ink);
+    color: var(--text);
+    padding: 24px;
+    border-radius: 4px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .outcome-card .now { font-size: 12px; color: var(--text-dim); font-family: 'DM Mono', monospace; margin-bottom: 4px; }
+  .outcome-card .val { font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: var(--accent); line-height: 1; }
+  .outcome-card .label { font-size: 11px; color: var(--text-dim); margin-top: 6px; text-transform: uppercase; letter-spacing: 0.08em; font-family: 'DM Mono', monospace; }
+  .outcome-card .range { font-size: 12px; color: var(--green-light); margin-top: 4px; }
+
+  /* WORKOUT TABS */
+  .tab-bar {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 24px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 10px 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 600;
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* MEAL GRID */
+  .meal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .meal-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .meal-card-header {
+    background: var(--green);
+    color: #d4edd9;
+    padding: 10px 16px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .meal-card-header span {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--green-mid);
+    font-weight: normal;
+    letter-spacing: 0.05em;
+    color: rgba(212,237,217,0.6);
+  }
+  .meal-card ul { list-style: none; padding: 12px 16px; }
+  .meal-card ul li {
+    padding: 5px 0;
+    font-size: 13px;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
+    padding-left: 14px;
+    position: relative;
+  }
+  .meal-card ul li::before { content: '·'; position: absolute; left: 0; color: var(--green-light); font-size: 18px; line-height: 1.2; }
+
+  /* INTRO TEXT */
+  .intro { font-size: 15px; color: var(--text-dim); margin-bottom: 32px; max-width: 700px; line-height: 1.7; }
+
+  @media (max-width: 640px) {
+    .hero { padding: 48px 24px 40px; }
+    .section { padding: 48px 24px; }
+    .outcome-grid { grid-template-columns: 1fr; }
+    .section-num { font-size: 48px; }
+  }
+
+  .demo-btn {
+    display: inline-block;
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid var(--accent);
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-left: 6px;
+    opacity: 0.7;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+  .demo-btn:hover { opacity: 1; }
+
+  /* PRINT */
+  @media print {
+    nav { display: none; }
+    .section { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#schedule" class="active">Schedule</a>
+  <a href="#targets">Meals & Targets</a>
+  <a href="#workout">Workout Plan</a>
+  <a href="#progression">10 Week Plan</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Summer 2026 · Diego's Fitness Plan</div>
+  <h1>GET<br><span>LEAN</span></h1>
+  <div class="hero-meta">
+    <div class="hero-stat">
+      <div class="hero-stat-val">18.1%</div>
+      <div class="hero-stat-label">Starting BF%</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val">~14%</div>
+      <div class="hero-stat-label">Target BF%</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val">10 WKS</div>
+      <div class="hero-stat-label">Duration</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val">JUL 2</div>
+      <div class="hero-stat-label">Deadline</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 1: DAILY SCHEDULE -->
+<div class="section" id="schedule">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div class="section-title">Daily Schedule</div>
+  </div>
+  <p class="intro">Non-negotiable daily structure. Protect sleep above everything else — it directly affects fat loss, recovery, and energy.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Time</th><th>Activity</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>7:00am</td><td>Lemon water (200ml)</td><td>Before anything else</td></tr>
+        <tr><td>7:10am</td><td>3–5k Run</td><td>Fasted, easy to moderate pace</td></tr>
+        <tr><td>7:40am</td><td>Protein shake (250ml water)</td><td>1 scoop beef protein — 27g protein</td></tr>
+        <tr><td>7:50am</td><td>Shower</td><td>—</td></tr>
+        <tr><td>8:10am</td><td>Breakfast (200ml water)</td><td>2 eggs + overnight oat pot — 35g protein</td></tr>
+        <tr><td>8:30am</td><td>Leave for school</td><td>—</td></tr>
+        <tr><td>~10:30am</td><td>Water mid-morning</td><td>400ml</td></tr>
+        <tr><td>1:15pm</td><td>School lunch (300ml water)</td><td>Protein first, skip pudding</td></tr>
+        <tr><td>~3:00pm</td><td>Water mid-afternoon</td><td>300ml</td></tr>
+        <tr><td>4:15pm</td><td>Home — study</td><td>—</td></tr>
+        <tr><td>5:30pm</td><td>Pre-gym meal (200ml water)</td><td>2 rice cakes + turkey + banana — 22g protein</td></tr>
+        <tr><td>6:00pm</td><td>Back to studying</td><td>—</td></tr>
+        <tr><td>7:00pm</td><td>Training — 45 mins (400ml water)</td><td>Follow workout plan</td></tr>
+        <tr><td>8:00pm</td><td>Home — wind down + stretch</td><td>5–10 min stretch</td></tr>
+        <tr><td>8:30pm</td><td>Dinner (300ml water)</td><td>High protein — most important meal</td></tr>
+        <tr><td>10:00pm</td><td>Water before bed</td><td>200ml</td></tr>
+        <tr><td>10:30pm</td><td>Sleep</td><td>Phone down by 10pm</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Priority Order</h3>
+  <p class="intro" style="margin-bottom:16px;">When life gets busy, drop in this order — never the other way around.</p>
+  <div class="priority-grid">
+    <div class="priority-card red">
+      <div class="priority-num">1</div>
+      <div class="priority-label">Sleep</div>
+      <div class="priority-sub">Never sacrifice. Everything else depends on it.</div>
+    </div>
+    <div class="priority-card amber">
+      <div class="priority-num">2</div>
+      <div class="priority-label">Morning Run</div>
+      <div class="priority-sub">Core to your daily calorie deficit.</div>
+    </div>
+    <div class="priority-card" style="border-top-color:#3b82f6;">
+      <div class="priority-num" style="color:#3b82f6;opacity:0.5;">3</div>
+      <div class="priority-label">Study</div>
+      <div class="priority-sub">Non-negotiable. School comes before gym.</div>
+    </div>
+    <div class="priority-card grey">
+      <div class="priority-num">4</div>
+      <div class="priority-label">Evening Training</div>
+      <div class="priority-sub">Most flexible. Drop this first if needed.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-warning" style="margin-top:24px;">
+    <p><strong>Exam Week (27 Apr – 1 May):</strong> Drop runs and training entirely. Keep 10k steps daily, keep eating well. This is a maintenance week — not a failure. Return to full schedule on <strong>May 2nd without exception.</strong> The real risk is exam week bleeding into week 6 and 7.</p>
+  </div>
+</div>
+
+<!-- PAGE 2: DAILY TARGETS -->
+<div class="section" id="targets">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div class="section-title">Daily Targets & Meal Plan</div>
+  </div>
+  <p class="intro">Weekday total ~1,872 kcal | 152g protein. Weekend total ~1,892 kcal | 154g protein. Water target 2.5–3 litres daily — pale yellow urine means hydrated, dark yellow means drink more.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Target</th><th>Goal</th><th>Why It Matters</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Calories</td><td>~1,900–2,000 kcal</td><td>Deficit without underfuelling your training</td></tr>
+        <tr><td>Protein</td><td>150g+ per day</td><td>Preserves muscle during a calorie deficit</td></tr>
+        <tr><td>Steps</td><td>10,000 per day</td><td>NEAT accounts for significant daily calorie burn</td></tr>
+        <tr><td>Sleep</td><td>8.5 hours</td><td>Directly controls hunger hormones ghrelin and leptin</td></tr>
+        <tr><td>Water</td><td>2.5–3 litres</td><td>Performance, satiety, and recovery</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Fixed Daily Meals</h3>
+  <div class="meal-grid">
+    <div class="meal-card">
+      <div class="meal-card-header">Breakfast <span>8:10am · Every day</span></div>
+      <ul>
+        <li>2 eggs scrambled</li>
+        <li>150g lactose free Greek yogurt</li>
+        <li>30g rolled oats</li>
+        <li>1 tbsp chia seeds</li>
+        <li>50g raspberries + 50g blueberries</li>
+        <li>1 tsp honey</li>
+        <li>535 kcal · 35g protein</li>
+      </ul>
+    </div>
+    <div class="meal-card">
+      <div class="meal-card-header">Post-Run Shake <span>7:40am · Every day</span></div>
+      <ul>
+        <li>1 scoop (30g) beef protein powder</li>
+        <li>Mixed in 250ml water</li>
+        <li>120 kcal · 27g protein</li>
+      </ul>
+    </div>
+    <div class="meal-card">
+      <div class="meal-card-header">Pre-Gym Meal <span>5:30pm · Weekdays</span></div>
+      <ul>
+        <li>2 rice cakes</li>
+        <li>100g turkey deli slices</li>
+        <li>2 oranges</li>
+        <li>242 kcal · 22g protein</li>
+      </ul>
+    </div>
+    <div class="meal-card">
+      <div class="meal-card-header">School Lunch <span>1:15pm · Weekdays</span></div>
+      <ul>
+        <li>Always choose protein source first</li>
+        <li>Avoid chips, white bread, large pasta</li>
+        <li>Skip pudding and dessert</li>
+        <li>~450 kcal · ~22g protein (estimated)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Dinner & Lunch Options</h3>
+  <p class="intro" style="margin-bottom:16px;">Pick from any of these depending on what's in the fridge. All are interchangeable for both dinner and weekend lunches.</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Meal</th><th>Ingredients</th><th>Kcal</th><th>Protein</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Beef mince stir fry</td><td>200g lean beef mince (5% fat), mixed peppers, broccoli, soy sauce, garlic, ginger, 150g basmati rice</td><td>502</td><td>48g</td></tr>
+        <tr><td>Baked salmon</td><td>150g salmon fillet, 150g roasted potatoes, large handful green beans, olive oil, lemon, garlic</td><td>478</td><td>38g</td></tr>
+        <tr><td>Chicken and rice bowl with roasted veg</td><td>180g chicken breast, 240g basmati rice, courgette, cherry tomatoes, red onion, mixed herbs, olive oil</td><td>562</td><td>53g</td></tr>
+        <tr><td>Turkey mince chilli</td><td>200g turkey mince, kidney beans, chopped tomatoes, cumin, smoked paprika, garlic, 150g rice</td><td>548</td><td>49g</td></tr>
+        <tr><td>Prawn and veg rice</td><td>265g king prawns, 200g basmati rice, spinach, spring onions, soy sauce, sesame oil, garlic, chilli</td><td>474</td><td>35g</td></tr>
+        <tr><td>Chicken thighs + veg</td><td>2 boneless chicken thighs (170g), 150g basmati rice, mixed peppers, courgette, red onion, olive oil, paprika</td><td>560</td><td>44g</td></tr>
+        <tr><td>Tuna and egg rice bowl</td><td>1 tin tuna, 2 boiled eggs, 150g rice, cucumber, cherry tomatoes, soy or hot sauce</td><td>490</td><td>44g</td></tr>
+        <tr><td>Chicken rice bowl salad</td><td>180g cooked chicken breast, 150g basmati rice, cucumber, cherry tomatoes, spring onions, soy sauce or hot sauce</td><td>562</td><td>53g</td></tr>
+        <tr><td>Mexican beef rice bowl</td><td>200g lean beef mince, cumin, smoked paprika, garlic, black beans, 150g rice, salsa</td><td>568</td><td>50g</td></tr>
+        <tr><td>Sea bass + veg</td><td>180g sea bass fillet, 100g basmati rice, mixed peppers, cherry tomatoes, olive oil, lemon, paprika, garlic</td><td>527</td><td>45g</td></tr>
+        <tr><td>Pork tenderloin with rice and veg</td><td>180g pork tenderloin, 150g basmati rice, mixed peppers, courgette, red onion, olive oil, garlic, smoked paprika, mixed herbs</td><td>513</td><td>50g</td></tr>
+        <tr><td>Slow cooked brisket</td><td>200g beef brisket, beef stock, garlic, onion, smoked paprika, cumin, 150g rice, mixed peppers, courgette</td><td>526</td><td>46g</td></tr>
+        <tr><td>Beef meatballs with roasted veg</td><td>200g lean beef mince (5% fat) formed into meatballs, mixed peppers, courgette, red onion, olive oil, paprika, 150g basmati rice</td><td>512</td><td>46g</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout" style="margin-top:24px;">
+    <p><strong>Sunday dinner:</strong> No planned meal — eat freely with family. Keep protein high where possible but don't stress the numbers on Sundays.</p>
+  </div>
+
+  <h3>Daily Water Schedule</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Time</th><th>Amount</th><th>With</th></tr></thead>
+      <tbody>
+        <tr><td>7:00am</td><td>200ml</td><td>Lemon water before run</td></tr>
+        <tr><td>7:40am</td><td>250ml</td><td>Protein shake</td></tr>
+        <tr><td>8:10am</td><td>200ml</td><td>Breakfast</td></tr>
+        <tr><td>~10:30am</td><td>400ml</td><td>Mid-morning at school</td></tr>
+        <tr><td>1:15pm</td><td>300ml</td><td>School lunch</td></tr>
+        <tr><td>~3:00pm</td><td>300ml</td><td>Mid-afternoon at school</td></tr>
+        <tr><td>5:30pm</td><td>200ml</td><td>Pre-gym meal</td></tr>
+        <tr><td>7:00pm</td><td>400ml</td><td>During training</td></tr>
+        <tr><td>8:30pm</td><td>300ml</td><td>Dinner</td></tr>
+        <tr><td>10:00pm</td><td>200ml</td><td>Before bed</td></tr>
+        <tr><td><strong>Total</strong></td><td><strong>2,750ml</strong></td><td>Within target range</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- PAGE 3: WORKOUT PLAN -->
+<div class="section" id="workout">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div class="section-title">Workout Plan</div>
+  </div>
+  <p class="intro">Upper/Lower split — 4 training days per week, 1 active recovery day. Sessions capped at 45 minutes. Progressive overload weekly: add 1 rep or slow the tempo when you can't add weight.</p>
+
+  <div class="table-wrap" style="margin-bottom:32px;">
+    <table>
+      <thead><tr><th>Day</th><th>Session</th></tr></thead>
+      <tbody>
+        <tr><td>Monday</td><td>Upper A — Push Focus</td></tr>
+        <tr><td>Tuesday</td><td>Lower A</td></tr>
+        <tr><td>Wednesday</td><td>Upper B — Pull Focus</td></tr>
+        <tr><td>Thursday</td><td>Lower B</td></tr>
+        <tr><td>Friday</td><td>Active Recovery — Smart Bike</td></tr>
+        <tr><td>Saturday</td><td>Rest or repeat any session</td></tr>
+        <tr><td>Sunday</td><td>Rest</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="showTab('upperA', this)">Upper A — Push</button>
+    <button class="tab-btn" onclick="showTab('lowerA', this)">Lower A</button>
+    <button class="tab-btn" onclick="showTab('upperB', this)">Upper B — Pull</button>
+    <button class="tab-btn" onclick="showTab('lowerB', this)">Lower B</button>
+    <button class="tab-btn" onclick="showTab('kneeankle', this)">Knee & Ankle</button>
+    <button class="tab-btn" onclick="showTab('shoulder', this)">Shoulder</button>
+    <button class="tab-btn" onclick="showTab('recovery', this)">Recovery</button>
+  </div>
+
+  <div id="upperA" class="tab-panel active">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Dumbbell Bench Press <a class="demo-btn" href="https://www.youtube.com/results?search_query=dumbbell+bench+press+form+short" target="_blank">▶ Demo</a></td><td>4</td><td>8–12</td><td>Control the descent</td></tr>
+          <tr><td>Dumbbell Shoulder Press <a class="demo-btn" href="https://www.youtube.com/results?search_query=dumbbell+shoulder+press+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>10</td><td>Seated or standing</td></tr>
+          <tr><td>Lateral Raises <a class="demo-btn" href="https://www.youtube.com/results?search_query=lateral+raises+proper+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>12–15</td><td>Light weight, strict form</td></tr>
+          <tr><td>Diamond Push-Ups <a class="demo-btn" href="https://www.youtube.com/results?search_query=diamond+push+ups+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>To failure</td><td>Elbows close to body</td></tr>
+          <tr><td>Tricep Overhead Extension <a class="demo-btn" href="https://www.youtube.com/results?search_query=dumbbell+tricep+overhead+extension+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>12</td><td>Both hands on one dumbbell</td></tr>
+          <tr><td>Chest Flyes <a class="demo-btn" href="https://www.youtube.com/results?search_query=dumbbell+chest+flyes+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>12</td><td>Full stretch at the bottom</td></tr>
+          <tr><td>Arnold Press <a class="demo-btn" href="https://www.youtube.com/results?search_query=arnold+press+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>10</td><td>Rotation adds shoulder depth</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="lowerA" class="tab-panel">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Dumbbell Romanian Deadlift <a class="demo-btn" href="https://www.youtube.com/results?search_query=dumbbell+romanian+deadlift+form+short" target="_blank">▶ Demo</a></td><td>4</td><td>10</td><td>Feel the hamstring stretch</td></tr>
+          <tr><td>Bulgarian Split Squat <a class="demo-btn" href="https://www.youtube.com/results?search_query=bulgarian+split+squat+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>10 each</td><td>Rear foot elevated on bench</td></tr>
+          <tr><td>Dumbbell Goblet Squat <a class="demo-btn" href="https://www.youtube.com/results?search_query=goblet+squat+form+short" target="_blank">▶ Demo</a></td><td>4</td><td>12</td><td>Hold one dumbbell at chest</td></tr>
+          <tr><td>Single Leg Calf Raise <a class="demo-btn" href="https://www.youtube.com/results?search_query=single+leg+calf+raise+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>15 each</td><td>Slow and controlled</td></tr>
+          <tr><td>Hollow Hold <a class="demo-btn" href="https://www.youtube.com/results?search_query=hollow+hold+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>30 sec</td><td>Lower back pressed to floor</td></tr>
+          <tr><td>Dumbbell Sumo Squat <a class="demo-btn" href="https://www.youtube.com/results?search_query=dumbbell+sumo+squat+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>12</td><td>Wide stance, toes out</td></tr>
+          <tr><td>Glute Bridge <a class="demo-btn" href="https://www.youtube.com/results?search_query=glute+bridge+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>15</td><td>Pause at top for 2 seconds</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="upperB" class="tab-panel">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Dumbbell Bent Over Row <a class="demo-btn" href="https://www.youtube.com/results?search_query=dumbbell+bent+over+row+form+short" target="_blank">▶ Demo</a></td><td>4</td><td>10</td><td>Chest parallel to floor</td></tr>
+          <tr><td>Renegade Row <a class="demo-btn" href="https://www.youtube.com/results?search_query=renegade+row+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>8 each</td><td>Keep hips square</td></tr>
+          <tr><td>Dumbbell Bicep Curl <a class="demo-btn" href="https://www.youtube.com/results?search_query=dumbbell+bicep+curl+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>12</td><td>No swinging</td></tr>
+          <tr><td>Rear Delt Flyes <a class="demo-btn" href="https://www.youtube.com/results?search_query=rear+delt+flyes+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>15</td><td>Slight bend in elbows</td></tr>
+          <tr><td>Plank <a class="demo-btn" href="https://www.youtube.com/results?search_query=plank+proper+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>45 sec</td><td>Squeeze glutes and core</td></tr>
+          <tr><td>Dumbbell Hammer Curl <a class="demo-btn" href="https://www.youtube.com/results?search_query=hammer+curl+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>12</td><td>Neutral grip throughout</td></tr>
+          <tr><td>Single Arm Row <a class="demo-btn" href="https://www.youtube.com/results?search_query=single+arm+dumbbell+row+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>10 each</td><td>Full range of motion</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="lowerB" class="tab-panel">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Dumbbell Lunge <a class="demo-btn" href="https://www.youtube.com/results?search_query=dumbbell+lunge+form+short" target="_blank">▶ Demo</a></td><td>4</td><td>10 each</td><td>Step forward, knee over toe</td></tr>
+          <tr><td>Single Leg Romanian Deadlift <a class="demo-btn" href="https://www.youtube.com/results?search_query=single+leg+romanian+deadlift+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>10 each</td><td>Balance and control</td></tr>
+          <tr><td>Jump Squats <a class="demo-btn" href="https://www.youtube.com/results?search_query=jump+squats+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>15</td><td>Land softly, absorb impact</td></tr>
+          <tr><td>Dumbbell Glute Bridge <a class="demo-btn" href="https://www.youtube.com/results?search_query=dumbbell+glute+bridge+form+short" target="_blank">▶ Demo</a></td><td>4</td><td>12</td><td>Weight resting on hips</td></tr>
+          <tr><td>Dead Bug <a class="demo-btn" href="https://www.youtube.com/results?search_query=dead+bug+exercise+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>10 each</td><td>Slow and deliberate</td></tr>
+          <tr><td>Lateral Lunge <a class="demo-btn" href="https://www.youtube.com/results?search_query=lateral+lunge+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>10 each</td><td>Push hips back on descent</td></tr>
+          <tr><td>Step-Up onto bench <a class="demo-btn" href="https://www.youtube.com/results?search_query=dumbbell+step+up+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>10 each</td><td>Drive through the heel</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="kneeankle" class="tab-panel">
+    <p class="intro" style="margin-bottom:16px;">Do this 2-3 times per week minimum — before evening training or on recovery days. Around 20 minutes. Slow and controlled throughout. Given your patellofemoral history this is the most important session in your plan.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Wall Sit <a class="demo-btn" href="https://www.youtube.com/results?search_query=wall+sit+exercise+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>45 sec</td><td>Builds quad endurance and knee stability — back flat against wall, thighs parallel to floor</td></tr>
+          <tr><td>Terminal Knee Extension (TKE) <a class="demo-btn" href="https://www.youtube.com/results?search_query=terminal+knee+extension+band+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>15 each</td><td>Resistance band around fixed point, straighten knee from slight bend — directly targets VMO which controls kneecap tracking</td></tr>
+          <tr><td>Spanish Squat <a class="demo-btn" href="https://www.youtube.com/results?search_query=spanish+squat+band+knee+rehab+short" target="_blank">▶ Demo</a></td><td>3</td><td>10</td><td>Band around fixed point at knee height, sit back into squat with shins vertical — isolates quad without kneecap compression, elite rehab exercise</td></tr>
+          <tr><td>Step Down (slow) <a class="demo-btn" href="https://www.youtube.com/results?search_query=eccentric+step+down+knee+rehab+short" target="_blank">▶ Demo</a></td><td>3</td><td>10 each</td><td>Stand on a step, lower one foot to floor over 3 seconds — best exercise for knee tracking and eccentric quad control</td></tr>
+          <tr><td>Banded Clamshell <a class="demo-btn" href="https://www.youtube.com/results?search_query=banded+clamshell+exercise+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>15 each</td><td>Lie on side, band above knees — strengthens hip abductors which directly control knee alignment during running</td></tr>
+          <tr><td>Copenhagen Plank <a class="demo-btn" href="https://www.youtube.com/results?search_query=copenhagen+plank+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>20 sec each</td><td>Side plank with top leg on bench or chair — builds adductor strength which stabilises the knee from the inside</td></tr>
+          <tr><td>Single Leg Calf Raise <a class="demo-btn" href="https://www.youtube.com/results?search_query=single+leg+calf+raise+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>15 each</td><td>3-second descent — builds ankle stability and Achilles tendon resilience</td></tr>
+          <tr><td>Ankle Alphabet <a class="demo-btn" href="https://www.youtube.com/results?search_query=ankle+alphabet+exercise+short" target="_blank">▶ Demo</a></td><td>2</td><td>1 full alphabet each</td><td>Foot lifted, draw alphabet with toe — improves ankle proprioception and mobility</td></tr>
+          <tr><td>Ankle Dorsiflexion Stretch <a class="demo-btn" href="https://www.youtube.com/results?search_query=ankle+dorsiflexion+stretch+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>30 sec each</td><td>Knee forward over toes, foot flat — critical for running mechanics and reducing knee stress</td></tr>
+          <tr><td>Tibialis Raise <a class="demo-btn" href="https://www.youtube.com/results?search_query=tibialis+raise+exercise+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>15</td><td>Stand with back against wall, heels 30cm out, raise toes toward shins — strengthens tibialis anterior which absorbs impact and protects the knee during running</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout" style="margin-top:16px;">
+      <p><strong>Key rules:</strong> If you feel the under-kneecap ache during any exercise, reduce the range of motion — don't stop, just go shallower. Ice the knee for 10-15 minutes after runs if it feels irritated. The Spanish Squat and Tibialis Raise are the two most underused bulletproofing exercises for runners — prioritise these.</p>
+    </div>
+  </div>
+
+  <div id="shoulder" class="tab-panel">
+    <p class="intro" style="margin-bottom:16px;">Do this 2-3 times per week — can be done before upper body sessions or on recovery days. Around 15-20 minutes. Light resistance only, focus entirely on control and range of motion.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Band Pull Apart <a class="demo-btn" href="https://www.youtube.com/results?search_query=band+pull+apart+exercise+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>15</td><td>Arms straight, pull band apart at chest height — bulletproofs the rear delt and rotator cuff, most overlooked shoulder exercise</td></tr>
+          <tr><td>External Rotation (band) <a class="demo-btn" href="https://www.youtube.com/results?search_query=band+external+rotation+shoulder+rehab+short" target="_blank">▶ Demo</a></td><td>3</td><td>15 each</td><td>Elbow at 90 degrees against body, rotate forearm outward — directly strengthens the rotator cuff which stabilises the shoulder joint</td></tr>
+          <tr><td>Face Pull <a class="demo-btn" href="https://www.youtube.com/results?search_query=face+pull+band+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>15</td><td>Band at face height, pull toward forehead with elbows high — the single best exercise for long term shoulder health</td></tr>
+          <tr><td>Prone Y-T-W <a class="demo-btn" href="https://www.youtube.com/results?search_query=prone+YTW+exercise+shoulder+short" target="_blank">▶ Demo</a></td><td>3</td><td>10 each position</td><td>Lie face down, raise arms into Y then T then W shape — activates all three parts of the trapezius and stabilises the shoulder blade</td></tr>
+          <tr><td>Scapular Push-Up <a class="demo-btn" href="https://www.youtube.com/results?search_query=scapular+push+up+form+short" target="_blank">▶ Demo</a></td><td>3</td><td>12</td><td>In plank position, squeeze and spread shoulder blades without bending elbows — strengthens serratus anterior which controls shoulder blade movement</td></tr>
+          <tr><td>Wall Slide <a class="demo-btn" href="https://www.youtube.com/results?search_query=wall+slide+shoulder+exercise+short" target="_blank">▶ Demo</a></td><td>3</td><td>10</td><td>Back against wall, arms at 90 degrees, slide up and down while keeping contact — improves shoulder blade control and overhead mobility</td></tr>
+          <tr><td>Sleeper Stretch <a class="demo-btn" href="https://www.youtube.com/results?search_query=sleeper+stretch+shoulder+short" target="_blank">▶ Demo</a></td><td>3</td><td>30 sec each</td><td>Lie on painful side, push forearm toward floor gently — improves internal rotation range of motion, most common tightness in shoulder pain</td></tr>
+          <tr><td>Cross Body Shoulder Stretch <a class="demo-btn" href="https://www.youtube.com/results?search_query=cross+body+shoulder+stretch+short" target="_blank">▶ Demo</a></td><td>3</td><td>30 sec each</td><td>Pull arm across chest and hold — releases posterior shoulder capsule tightness</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout callout-warning" style="margin-top:16px;">
+      <p><strong>Important:</strong> If you get sharp pain rather than a dull ache during any of these, stop that exercise and mention it to a GP or physio. Shoulder pain in teenagers can sometimes indicate a labral issue which needs proper diagnosis. Dull discomfort during stretches is normal — sharp pain is not.</p>
+    </div>
+  </div>
+
+  <div id="recovery" class="tab-panel">
+    <ul class="bullet-list">
+      <li>Smart bike: 30–45 minutes at an easy, conversational pace</li>
+      <li>10 minute stretch focusing on legs and lower back</li>
+      <li>Still hit your 10,000 steps for the day</li>
+      <li>This day is recovery — do not turn it into a hard session</li>
+    </ul>
+  </div>
+
+  <div class="callout" style="margin-top:32px;">
+    <p><strong>Pull-up bar recommendation:</strong> A £15–20 doorframe pull-up bar would be the single biggest upgrade to this plan. You currently have no vertical pulling movement, which leaves your back and biceps undertrained. Worth getting before week 3.</p>
+  </div>
+</div>
+
+<!-- PAGE 4: 10 WEEK PROGRESSION -->
+<div class="section" id="progression">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div class="section-title">10 Week Progression</div>
+  </div>
+  <p class="intro">Three phases. Each builds on the last. Do not skip ahead. The exam week is built in — it does not derail the plan.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Week</th><th>Phase</th><th>Running</th><th>Training Focus</th><th>Key Target</th><th>Target Weight</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><span class="phase-badge phase-foundation">Foundation</span></td>
+          <td>3k daily</td>
+          <td>Learn all exercises, light weight, nail form</td>
+          <td>Nail the schedule</td>
+          <td>65.5–65.75kg</td>
+        </tr>
+        <tr>
+          <td>2 — EXAMS</td>
+          <td><span class="phase-badge phase-maintenance">Maintenance</span></td>
+          <td>Rest</td>
+          <td>Rest — walk 10k steps, eat clean</td>
+          <td>Do not spiral</td>
+          <td>65–65.5kg</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><span class="phase-badge phase-foundation">Foundation</span></td>
+          <td>3–4k daily</td>
+          <td>Return to week 1 level immediately, add 1 rep per set</td>
+          <td>Back on track, no excuses</td>
+          <td>64.5–65kg</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><span class="phase-badge phase-foundation">Foundation</span></td>
+          <td>4k daily</td>
+          <td>Increase weight if form is solid</td>
+          <td>Zero missed sessions</td>
+          <td>64–64.5kg</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><span class="phase-badge phase-build">Build</span></td>
+          <td>4k daily</td>
+          <td>Add a set to 2 exercises per day</td>
+          <td>Push effort to 7/10</td>
+          <td>63.5–64kg</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td><span class="phase-badge phase-build">Build</span></td>
+          <td>4–5k daily</td>
+          <td>Add weight or reps across all lifts</td>
+          <td>Effort at 8/10</td>
+          <td>63–63.5kg</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td><span class="phase-badge phase-build">Build</span></td>
+          <td>5k daily</td>
+          <td>Increase volume — add sets across the board</td>
+          <td>Consistency at full effort</td>
+          <td>62.5–63kg</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td><span class="phase-badge phase-peak">Peak</span></td>
+          <td>5k daily</td>
+          <td>Superset Upper A + Upper B exercises</td>
+          <td>Shorter rest periods</td>
+          <td>62.5–63kg</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td><span class="phase-badge phase-peak">Peak</span></td>
+          <td>5k daily</td>
+          <td>Superset Lower A + Lower B exercises</td>
+          <td>Push to near failure</td>
+          <td>62–62.5kg</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td><span class="phase-badge phase-peak">Peak</span></td>
+          <td>5k daily</td>
+          <td>Full effort — best performance of the plan</td>
+          <td>Finish strong</td>
+          <td>63kg</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>What to Expect</h3>
+  <ul class="bullet-list">
+    <li><strong>Week 1:</strong> Building the habit is the only goal. Nail the schedule.</li>
+    <li><strong>Week 2:</strong> Exams — maintenance only. Walk, eat clean, don't spiral.</li>
+    <li><strong>Weeks 3–4:</strong> Back on track. Energy improves, foundation builds.</li>
+    <li><strong>Weeks 5–6:</strong> Visible change begins. Most people notice a difference here.</li>
+    <li><strong>Weeks 7–10:</strong> Most significant body composition change. Push hardest here.</li>
+  </ul>
+
+  <h3>Expected Outcome by July 2nd</h3>
+  <div class="outcome-grid">
+    <div class="outcome-card">
+      <div class="now">Now: 18.1%</div>
+      <div class="val">~14%</div>
+      <div class="label">Body Fat %</div>
+      <div class="range">Best case: ~13%</div>
+    </div>
+    <div class="outcome-card">
+      <div class="now">Now: 65.75kg</div>
+      <div class="val">63kg</div>
+      <div class="label">Weight</div>
+      <div class="range">Range: 62–63kg</div>
+    </div>
+    <div class="outcome-card">
+      <div class="now">Now: baseline</div>
+      <div class="val">Lean</div>
+      <div class="label">Visual Change</div>
+      <div class="range">Noticeably defined</div>
+    </div>
+  </div>
+
+  <div class="callout callout-warning">
+    <p><strong>The honest warning:</strong> The biggest risk to this plan is not injury or lack of fitness. It is week 3–4 motivation drop and exam week bleeding into week 6. Decide now that neither will happen. Ten weeks is short enough to push through without exception.</p>
+  </div>
+</div>
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  const sections = document.querySelectorAll('.section');
+  const navLinks = document.querySelectorAll('nav a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 60) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+</body>
+</html>
